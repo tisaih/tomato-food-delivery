@@ -2,7 +2,15 @@ import * as PropTypes from "prop-types";
 import React from "react";
 
 export function OrderCard(props) {
-  const { description, _restaurant, status, total_amount } = props.order;
+  const { 
+    description, 
+    _restaurant, 
+    status, 
+    subtotal,
+    total_discount, 
+    total_amount 
+  } = props.order;
+
   return (
     <div className="col s4 m4">
       <div className="card blue-grey darken-1">
@@ -31,6 +39,8 @@ export function OrderCard(props) {
               {stat}
             </div>
           ))}
+          <div style={{ fontWeight: 700 }}>Subtotal: {subtotal}</div>
+          <div style={{ fontWeight: 700 }}>Discount: {`${total_discount * 100}%`}</div>
           <div style={{ fontWeight: 700 }}>Total amt: {total_amount}</div>
         </div>
       </div>
