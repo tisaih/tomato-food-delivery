@@ -15,6 +15,28 @@ function createStateMachine(order) {
   });
 }
 
+function applyOrderDiscount(order) {
+  let { total_amount: subtotal = 0, total_discount = 0 } = order;
+  
+  if (subtotal > 250 && subtotal <= 500) {
+    total_discount = 0.05;
+  } else if (subtotal > 500 && subtotal <= 700) {
+    total_discount = 0.08;
+  } else if (subtotal > 700) {
+    total_discount = 0.10;
+  }
+  
+  const total_discount_value = subtotal * total_discount;
+  const total_amount = subtotal - total_discount_value;
+
+  return {
+    ...order,
+    subtotal,
+    total_discount,
+    total_amount
+  }
+}
+
 function handleError(res, err) {
   return res.send(500, err);
 }
@@ -64,12 +86,12 @@ exports.show = function(req, res) {
 };
 
 exports.create = function(req, res) {
-  Order.create({ ...req.body, _user: req.user._id }, function(err, order) {
+  const order = applyOrderDiscount({ ...req.body || {} });
+
+  Order.create({ ...order, _user: req.user._id }, function(err, order) {
     if (err) {
       return handleError(res, err);
     }
-
-    order.populate();
 
     return res.json(201, order);
   });
