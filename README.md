@@ -48,7 +48,8 @@ Make sure to add your own `MONGOURI` from your [mLab](http://mlab.com) database 
 
 ```javascript
 module.exports = {
-  mongoURI: "YOUR_MONGO_URI_HERE",
-  secretOrKey: "secret"
-};
+  mongoURI: "mongodb://localhost:27017",
+  secretOrKey: "123456",
+  userRoles: ["user", "manager"]
+  };
 ```
