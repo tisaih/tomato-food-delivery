@@ -31,11 +31,11 @@ npm run dev
 // Server runs on http://localhost:5000 and client on http://localhost:3000
 ```
 
-## MERNJS stack
+## The stack
 
 - [React](https://reactjs.org) and [React Router](https://reacttraining.com/react-router/) for frontend.
 - [Express](http://expressjs.com/) and [Node](https://nodejs.org/en/) for the backend.
-- [MongoDB](https://www.mongodb.com/) for the database.
+- [PostgreSQL](https://www.postgresql.org/) for the database. (RUN: CREATE EXTENSION IF NOT EXISTS "uuid-ossp";)
 - [Redux](https://redux.js.org/basics/usagewithreact) for state management between React components.
 
 ## Demo
