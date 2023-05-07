@@ -1,0 +1,206 @@
+## Common
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTAyZDg5ZjE4ZjdmNTBmNjk4MGIwYyIsIm5hbWUiOiJIZW5yaXF1ZSBHb3V2ZWlhIiwiaWF0IjoxNjgzMTU5NjExLCJleHAiOjE3MTQ3MTY1Mzd9.B9em7ofuMqLAl9KcbZ9QXGYw7itWkv6WOTYZmSY2R8A
+
+
+### Users
+
+
+### Register
+POST http://localhost:6000/api/users/register
+Content-Type:  application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Manager",
+  "email": "manager@email.com",
+  "role": "manager",
+  "password": "123mudar",
+  "password2": "123mudar"
+}
+
+### Login
+POST http://localhost:6000/api/users/login
+Content-Type:  application/json
+Authorization: Bearer {{token}}
+
+{
+  "email": "manager@email.com",
+  "password": "123mudar"
+}
+
+###
+@userId = c2ffb183-728d-4394-bf55-d06fc430eed1
+
+### ByID
+GET http://localhost:6000/api/users/{{userId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+## Restaurants
+
+
+### Create
+POST http://localhost:6000/api/restaurants
+Content-Type:  application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Restaurant Test 2",
+  "description": "This is a Restaurant created by testing",
+  "type": "Test",
+  "meals": [{
+      "name": "Test Meal 1",
+      "price": 50.0,
+      "description": "This is a test meal 1"
+    }, {
+      "name": "Test Meal 2",
+      "price": 50.0,
+      "description": "This is a test meal 2"
+    }
+  ]
+}
+
+### All
+GET http://localhost:6000/api/restaurants
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+@restaurantId = f0f14389-a1c1-412f-8e0e-e062c477622a
+
+### ByID
+GET http://localhost:6000/api/restaurants/{{restaurantId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Update
+PUT http://localhost:6000/api/restaurants/{{restaurantId}}
+Content-Type:  application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": "3b583a58-4c60-4481-8af8-9ef6a82770b6",
+  "name": "Restaurant Test UPDATED",
+  "description": "This is a Restaurant created by testing",
+  "type": "Test",
+  "meals": [
+    {
+      "id": "2ef88cd4-f1aa-4629-857d-0f31ad8c6eb8",
+      "name": "Test Meal 1",
+      "price": 50,
+      "description": "This is a test meal 1 UPDATED"
+    },
+    {
+      "id": "41941105-ff5b-4a06-b11b-6bc136359bf0",
+      "name": "Test Meal 2",
+      "price": 50,
+      "description": "This is a test meal 2 UPDATED"
+    }
+  ]
+}
+
+### Remove
+DELETE http://localhost:6000/api/restaurants/{{restaurantId}}
+Content-Type:  application/json
+Authorization: Bearer {{token}}
+
+
+## Meals
+
+
+### Create
+POST http://localhost:6000/api/meals
+Content-Type:  application/json
+Authorization: Bearer {{token}}
+
+{
+  "restaurant_id": "f0f14389-a1c1-412f-8e0e-e062c477622a",
+  "name": "Test Meal 4",
+  "description": "This is a test meal 4",
+  "price": 100
+}
+
+### All
+GET http://localhost:6000/api/meals
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+@mealId = fd4f9d04-7e35-4cb9-bbe0-a31843d9ea64
+
+### ByID
+GET http://localhost:6000/api/meals/{{mealId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Update
+PUT http://localhost:6000/api/meals/{{mealId}}
+Content-Type:  application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": "fd4f9d04-7e35-4cb9-bbe0-a31843d9ea64",
+  "restaurant_id": "f0f14389-a1c1-412f-8e0e-e062c477622a",
+  "name": "Test Meal 4",
+  "description": "This is a test meal 4",
+  "price": 100.0
+}
+
+### Remove
+DELETE http://localhost:6000/api/meals/{{mealId}}
+Content-Type:  application/json
+Authorization: Bearer {{token}}
+
+
+## Order
+
+
+### Create
+POST http://localhost:6000/api/orders
+Content-Type:  application/json
+Authorization: Bearer {{token}}
+
+{
+  "user_id": "5da82455-63b8-4994-833e-5ac0d52cc9c1",
+  "restaurant_id": "f0f14389-a1c1-412f-8e0e-e062c477622a",
+  "meals": ["b53b5dad-5d7b-4969-918f-7296462bc824", "8c3b34fa-4f22-47c4-a9ee-d80675ba11cd"],
+  "total_amount": 40
+}
+
+### All
+GET http://localhost:6000/api/orders
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+@orderId = 7cbfb3e0-b6ef-4f22-9a8d-105c05557915
+
+### ByID
+GET http://localhost:6000/api/orders/{{orderId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### ByRestaurantId
+GET http://localhost:6000/api/orders/restaurant/{{restaurantId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Update
+PUT http://localhost:6000/api/orders/{{orderId}}
+Content-Type:  application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": "7cbfb3e0-b6ef-4f22-9a8d-105c05557915",
+  "user_id": "5da82455-63b8-4994-833e-5ac0d52cc9c1",
+  "restaurant_id": "f0f14389-a1c1-412f-8e0e-e062c477622a",
+  "status": "in_route",
+  "meals": ["b53b5dad-5d7b-4969-918f-7296462bc824", "8c3b34fa-4f22-47c4-a9ee-d80675ba11cd"],
+  "total_amount": 40
+}
+
+### Remove
+DELETE http://localhost:6000/api/orders/{{orderId}}
+Content-Type:  application/json
+Authorization: Bearer {{token}}
