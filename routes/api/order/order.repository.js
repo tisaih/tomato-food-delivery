@@ -160,20 +160,24 @@ exports.create = async (order) => {
 }
 
 exports.update = async (order) => {
-  const { meals } = order;
+  const { meals, restaurant } = order;
+  
   delete order.meals;
+  delete order.restaurant;
 
   try {
     await db.transaction(async trx => {
-      await trx('orders').update(order).where('id', order.id);
-      await trx('order_meals').where('order_id', order.id).del();
-
+      await trx('orders').update({ ...order, restaurant_id: restaurant.id }).where('id', order.id);
+      
       if (meals && meals.length) {
         const orderMeals = meals.map(mealId => ({ order_id: order.id, meal_id: mealId }));
+
+        await trx('order_meals').where('order_id', order.id).del();
         await trx('order_meals').insert(orderMeals);
       }
     });
   } finally {
+    order.restaurant = restaurant;
     order.meals = meals || [];
   }
 }

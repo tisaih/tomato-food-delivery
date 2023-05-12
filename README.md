@@ -1,6 +1,6 @@
 # tomato-food-delivery-app
 
-Tomato app is a full-stack system build in MERN.js which aims to offer a customer a range of food products to order. Then the customer can choose and order a menu build on its own.
+Tomato app is a full-stack system build in ~~M~~ERN.js integrated with PostgreSQL which aims to offer a customer a range of food products to order. Then the customer can choose and order a menu build on its own.
 
 The main features are:
 
@@ -21,6 +21,10 @@ Choose the stack you would like to use according to the branch:
 
 ## Quick Start
 
+```sql
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+```
+
 ```javascript
 // Install dependencies for server & client
 npm install && npm run client-install
@@ -35,7 +39,7 @@ npm run dev
 
 - [React](https://reactjs.org) and [React Router](https://reacttraining.com/react-router/) for frontend.
 - [Express](http://expressjs.com/) and [Node](https://nodejs.org/en/) for the backend.
-- [PostgreSQL](https://www.postgresql.org/) for the database. (RUN: CREATE EXTENSION IF NOT EXISTS "uuid-ossp";)
+- [PostgreSQL](https://www.postgresql.org/) for the database.
 - [Redux](https://redux.js.org/basics/usagewithreact) for state management between React components.
 
 ## Demo
@@ -52,12 +56,4 @@ Let's order food from the above restaurant.
 
 ## Configuration
 
-Make sure to add your own `MONGOURI` from your [mLab](http://mlab.com) database in `config/keys.js`.
-
-```javascript
-module.exports = {
-  mongoURI: "mongodb://localhost:27017",
-  secretOrKey: "123456",
-  userRoles: ["user", "manager"]
-  };
-```
+Make sure to add your own `SETTINGS` from your database in `.env`.

@@ -1,16 +1,8 @@
 const express = require("express");
-const mongoController = require("./restaurant.controller");
-const controller = require("./restaurant.controller2");
+const controller = require("./restaurant.controller");
 const auth = require("../auth/auth.service");
 
 const router = express.Router();
-
-// router.get("/", auth.hasRole("user"), mongoController.index);
-// router.get("/:id", auth.hasRole("user"), mongoController.show);
-// router.post("/", auth.hasRole("manager"), mongoController.create);
-// router.put("/:id", auth.hasRole("manager"), mongoController.update);
-// router.patch("/:id", auth.hasRole("manager"), mongoController.update);
-// router.delete("/:id", auth.hasRole("manager"), mongoController.destroy);
 
 router.get("/", auth.hasRole("user"), controller.index);
 router.get("/:id", auth.hasRole("user"), controller.show);

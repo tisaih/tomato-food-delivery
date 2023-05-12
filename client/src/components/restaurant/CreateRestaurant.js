@@ -8,7 +8,7 @@ import { RestaurantDetails } from "./RestaurantDetails";
 import { MealTable } from "../meals/MealTable";
 
 class CreateRestaurant extends Component {
-  state = { userInfo: {}, _meals: [{ name: "", price: 0, description: "" }] };
+  state = { userInfo: {}, meals: [{ name: "", price: 0, description: "" }] };
 
   async componentDidMount() {
     this.setState({ loading: true });
@@ -21,23 +21,23 @@ class CreateRestaurant extends Component {
   };
 
   onAdd = () => {
-    const { _meals } = this.state;
+    const { meals } = this.state;
     this.setState({
-      _meals: [..._meals, { name: "", price: 0, description: "" }]
+      meals: [...meals, { name: "", price: 0, description: "" }]
     });
   };
 
   onDelete = index => {
-    const { _meals } = this.state;
+    const { meals } = this.state;
     this.setState({
-      _meals: [..._meals.slice(0, index), ..._meals.slice(index + 1)]
+      meals: [...meals.slice(0, index), ...meals.slice(index + 1)]
     });
   };
 
   onRowDataChange = (e, field, index) => {
-    const meals = [...this.state._meals];
+    const meals = [...this.state.meals];
     this.setState({
-      _meals: [
+      meals: [
         ...meals.slice(0, index),
         { ...meals[index], [field]: e.target.value },
         ...meals.slice(index + 1)
@@ -51,7 +51,7 @@ class CreateRestaurant extends Component {
     try {
       await axios.post(
         "/api/restaurants",
-        pick(this.state, ["name", "type", "description", "_meals"])
+        pick(this.state, ["name", "type", "description", "meals"])
       );
       alert(`Restaurant ${this.state.name} successfully created.`);
       this.props.history.push("/restaurants");
@@ -62,7 +62,7 @@ class CreateRestaurant extends Component {
   };
 
   render() {
-    const { name, type, description, userInfo, _meals, loading } = this.state;
+    const { name, type, description, userInfo, meals, loading } = this.state;
     if (loading) return <Loader />;
     if (userInfo.role !== "manager") return "You are not authorized.";
     return (
@@ -77,7 +77,7 @@ class CreateRestaurant extends Component {
             />
             <h3>Meals</h3>
             <MealTable
-              meals={_meals}
+              meals={meals}
               render={(meal, index) => {
                 const { price, description: mealDesc, name: mealName } = meal;
                 return (
@@ -91,7 +91,7 @@ class CreateRestaurant extends Component {
                       this.onRowDataChange(e, "description", index)
                     }
                     description={mealDesc}
-                    meals={_meals}
+                    meals={meals}
                     onDelete={() => this.onDelete(index)}
                   />
                 );

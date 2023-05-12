@@ -1,11 +1,11 @@
 module.exports = {
   client: 'postgresql',
   connection: {
-    host: 'localhost', // process.env.DATABASE_HOST,
-    port: '5432', // process.env.DATABASE_PORT,  
-    database: 'tomato_food', // process.env.DATABASE_NAME,
-    user: 'postgres', // process.env.DATABASE_USER,
-    password: '123mudar', // process.env.DATABASE_PASSWORD,
+    host: process.env.DATABASE_HOST || 'localhost',
+    port: process.env.DATABASE_PORT || '5432',
+    database: process.env.DATABASE_NAME || 'tomato_food',
+    user: process.env.DATABASE_USER || 'postgres',
+    password: process.env.DATABASE_PASSWORD || 'tisaih',
     ssl: null // process.env.NODE_ENV === 'development' ? null : { rejectUnauthorized: false }
   },
   pool: {
