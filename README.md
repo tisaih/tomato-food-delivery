@@ -11,6 +11,14 @@ The main features are:
 - Use of `state-machine` to validate transitions of order status.
 - Follow React and Node.js best practices.
 
+## Getting Started
+
+Choose the stack you would like to use according to the branch:
+
+- `master`: Using mongodb
+- `postgresql`: Using postgresql
+- `postgresql-docker`: Using postgresql with docker 
+
 ## Quick Start
 
 ```javascript
