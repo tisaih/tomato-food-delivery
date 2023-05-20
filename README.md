@@ -21,18 +21,8 @@ Choose the stack you would like to use according to the branch:
 
 ## Quick Start
 
-```sql
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
-
-```javascript
-// Install dependencies for server & client
-npm install && npm run client-install
-
-// Run client & server with concurrently
-npm run dev
-
-// Server runs on http://localhost:5000 and client on http://localhost:3000
+docker-compose up -d build
 ```
 
 ## The stack
