@@ -1,79 +1,70 @@
-const Meal = require("./meal.model");
-const _ = require("lodash");
+const MealRepository = require("./meal.repository");
 
 function handleError(res, err) {
   return res.send(500, err);
 }
 
 // Get list of meals
-exports.index = function(req, res) {
-  Meal.find(function(err, meals) {
-    if (err) {
-      return handleError(res, err);
-    }
+exports.index = async function(req, res) {
+  try {
+    const meals = await MealRepository.find();
     return res.json(200, meals);
-  });
+  } catch (err) {
+    return handleError(res, err);
+  }
 };
 
 // Get a single meal
-exports.show = function(req, res) {
-  Meal.findById(req.params.id, function(err, meal) {
-    if (err) {
-      return handleError(res, err);
-    }
+exports.show = async function(req, res) {
+  try {
+    const meal = await MealRepository.findById(req.params.id);
     if (!meal) {
       return res.send(404);
     }
-    return res.json(meal);
-  });
+    return res.json(200, meal);
+  } catch (err) {
+    return handleError(res, err);
+  }
 };
 
-exports.create = function(req, res) {
-  Meal.create(req.body, function(err, meal) {
-    if (err) {
-      return handleError(res, err);
-    }
+// Creates a meal
+exports.create = async function(req, res) {
+  try {
+    const meal = await MealRepository.create(req.body);
     return res.json(201, meal);
-  });
+  } catch (err) {
+    return handleError(res, err);
+  }
 };
 
 // Updates an existing meal in the DB.
-exports.update = function(req, res) {
-  if (req.body._id) {
-    delete req.body._id;
-  }
-  Meal.findById(req.params.id, function(err, meal) {
-    if (err) {
-      return handleError(res, err);
-    }
-    if (!meal) {
+exports.update = async function(req, res) {
+  try {
+    const existingMeal = await MealRepository.findById(req.params.id);
+    if (!existingMeal) {
       return res.send(404);
     }
-    const updated = _.merge(meal, req.body);
-    updated.save(function(err) {
-      if (err) {
-        return handleError(res, err);
-      }
 
-      return res.json(200, meal);
-    });
-  });
+    const meal = req.body;
+    await MealRepository.update(meal);
+
+    return res.json(200, meal);
+  } catch (err) {
+    return handleError(res, err);
+  }
 };
 
 // Deletes a meal from the DB.
-exports.destroy = function(req, res) {
-  Meal.findById(req.params.id, function(err, meal) {
-    if (err) {
-      return handleError(res, err);
-    }
-    if (!meal) {
+exports.destroy = async function(req, res) {
+  try {
+    const existingMeal = await MealRepository.findById(req.params.id);
+    if (!existingMeal) {
       return res.send(404);
     }
-    meal.remove(function(err) {
-      if (err) {
-        return handleError(res, err);
-      }
-      return res.send(204);
-    });
-  });
+    await MealRepository.remove(req.params.id);
+
+    return res.json(200);
+  } catch (err) {
+    return handleError(res, err);
+  }
 };

@@ -1,8 +1,10 @@
-const config = require("../../../config/keys");
+const compose = require("composable-middleware");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
-const compose = require("composable-middleware");
-const User = require("../user/user.model");
+
+const config = require("../../../config/keys");
+const UserRepository = require("../user/user.repository");
+
 const validateJwt = expressJwt({ secret: config.secretOrKey });
 
 /**
@@ -17,18 +19,20 @@ function isAuthenticated() {
         // allow access_token to be passed through query parameter as well
         validateJwt(req, res, next);
         if (req.query && req.query.hasOwnProperty("access_token")) {
-          req.headers.authorization = "Bearer " + req.query.access_token;
+          req.headers.authorization = `Bearer ${req.query.access_token}`;
         }
       })
       // Attach user to request
-      .use(function(req, res, next) {
-        User.findById(req.user.id, function(err, user) {
-          if (err) return next(err);
+      .use(async function(req, res, next) {
+        try {
+          const user = await UserRepository.findById(req.user.id);
           if (!user) return res.send(401);
-
+          
           req.user = user;
           next();
-        });
+        } catch (err) {
+          return next(err);
+        }
       })
   );
 }
@@ -58,13 +62,11 @@ function hasRole(roleRequired) {
  */
 
 function isLocalStrategy() {
-  return compose().use(function(req, res, next) {
-    User.findById(req.params.id, function(err, user) {
-      if (!user) return res.send(401);
-
-      if (user.provider === "local") next();
-      else res.send(400, "Only can change password on local strategy");
-    });
+  return compose().use(async function(req, res, next) {
+    const user = await UserRepository.findById(req.params.id);
+    if (!user) return res.send(401);
+    if (user.provider === "local") next();
+    else res.send(400, "Only can change password on local strategy");
   });
 }
 
@@ -72,8 +74,8 @@ function isLocalStrategy() {
  * Returns a jwt token signed by the app secret
  */
 function signToken(id) {
-  //return jwt.sign({ _id: id }, config.secretOrKey, { expiresInMinutes: 60*5 });
-  return jwt.sign({ _id: id }, config.secretOrKey);
+  //return jwt.sign({ id }, config.secretOrKey, { expiresInMinutes: 60*5 });
+  return jwt.sign({ id }, config.secretOrKey);
 }
 
 /**
@@ -84,7 +86,7 @@ function setTokenCookie(req, res) {
     return res.json(404, {
       message: "Something went wrong, please try again."
     });
-  const token = signToken(req.user._id);
+  const token = signToken(req.user.id);
   res.cookie("token", JSON.stringify(token));
   res.redirect("/");
 }

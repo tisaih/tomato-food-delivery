@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: tisaih-db
+    image: postgres:12
+    environment:
+      POSTGRES_DB: tomato_food
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "123tisaih"
+    volumes:
+      #- .docker/data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks: 
+      - tisaih_nt
+
+  dbadmin:
+    container_name: tisaih-dbadmin
+    image: dpage/pgadmin4:latest
+    environment: 
+      PGADMIN_DEFAULT_EMAIL: "admin@tisaih.com"
+      PGADMIN_DEFAULT_PASSWORD: "123tisaih"
+    ports: 
+      - "6543:80"
+    depends_on: 
+      - db
+    networks: 
+      - tisaih_nt
+
+  app:
+    container_name: tomato-food-app
+    build: .
+    image: tomato-food/app
+    ports:
+      - "3000:3000"
+      - "6000:6000"
+    depends_on:
+      - api
+    networks:
+      - tisaih_nt
+
+networks: 
+  tisaih_nt:
+    name: tisaih_nt
+    driver: bridge
