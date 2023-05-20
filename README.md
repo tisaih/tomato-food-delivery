@@ -1,6 +1,6 @@
 # tomato-food-delivery-app
 
-Tomato app is a full-stack system build in MERN.js which aims to offer a customer a range of food products to order. Then the customer can choose and order a menu build on its own.
+Tomato app is a full-stack system build in ~~M~~ERN.js integrated with PostgreSQL which aims to offer a customer a range of food products to order. Then the customer can choose and order a menu build on its own.
 
 The main features are:
 
@@ -11,7 +11,19 @@ The main features are:
 - Use of `state-machine` to validate transitions of order status.
 - Follow React and Node.js best practices.
 
+## Getting Started
+
+Choose the stack you would like to use according to the branch:
+
+- `master`: Using mongodb
+- `postgresql`: Using postgresql
+- `postgresql-docker`: Using postgresql with docker 
+
 ## Quick Start
+
+```sql
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+```
 
 ```javascript
 // Install dependencies for server & client
@@ -23,11 +35,11 @@ npm run dev
 // Server runs on http://localhost:5000 and client on http://localhost:3000
 ```
 
-## MERNJS stack
+## The stack
 
 - [React](https://reactjs.org) and [React Router](https://reacttraining.com/react-router/) for frontend.
 - [Express](http://expressjs.com/) and [Node](https://nodejs.org/en/) for the backend.
-- [MongoDB](https://www.mongodb.com/) for the database.
+- [PostgreSQL](https://www.postgresql.org/) for the database.
 - [Redux](https://redux.js.org/basics/usagewithreact) for state management between React components.
 
 ## Demo
@@ -44,12 +56,4 @@ Let's order food from the above restaurant.
 
 ## Configuration
 
-Make sure to add your own `MONGOURI` from your [mLab](http://mlab.com) database in `config/keys.js`.
-
-```javascript
-module.exports = {
-  mongoURI: "mongodb://localhost:27017",
-  secretOrKey: "123456",
-  userRoles: ["user", "manager"]
-  };
-```
+Make sure to add your own `SETTINGS` from your database in `.env`.

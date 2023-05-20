@@ -13,7 +13,7 @@ class Meals extends Component {
     try {
       this.setState({ loading: true });
       const response = await axios(`/api/restaurants/${this.restaurantId}`);
-      this.setState({ meals: response.data._meals, loading: false });
+      this.setState({ meals: response.data.meals, loading: false });
     } catch (e) {
       console.error(e);
       this.setState({ loading: false });
@@ -48,11 +48,11 @@ class Meals extends Component {
   handleSubmit = async () => {
     const payload = {
       total_amount: this.orderTotal,
-      _restaurant: this.restaurantId,
-      _meals: []
+      restaurant_id: this.restaurantId,
+      meals: []
     };
     this.state.meals.forEach(meal => {
-      if (meal.total) payload._meals.push(meal._id);
+      if (meal.total) payload.meals.push(meal.id);
     });
     this.setState({ submitting: true });
     try {

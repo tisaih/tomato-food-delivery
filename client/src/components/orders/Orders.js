@@ -46,10 +46,10 @@ class Orders extends Component {
               <div className="row">
                 {orders.map((rest, index) => (
                   <OrderCard
-                    key={rest._id}
+                    key={rest.id}
                     order={rest}
                     onStatusChange={status =>
-                      this.onOrderStatusChange(rest._id, status, index)
+                      this.onOrderStatusChange(rest.id, status, index)
                     }
                   />
                 ))}

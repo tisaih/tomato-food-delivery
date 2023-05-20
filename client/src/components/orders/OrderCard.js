@@ -4,7 +4,7 @@ import React from "react";
 export function OrderCard(props) {
   const { 
     description, 
-    _restaurant, 
+    restaurant, 
     status, 
     subtotal,
     total_discount, 
@@ -15,7 +15,7 @@ export function OrderCard(props) {
     <div className="col s4 m4">
       <div className="card blue-grey darken-1">
         <div className="card-content white-text">
-          <span className="card-title">{_restaurant.name}</span>
+          <span className="card-title">{restaurant.name}</span>
           <p>{description}</p>
         </div>
         <div className="card-panel teal lighten-2">

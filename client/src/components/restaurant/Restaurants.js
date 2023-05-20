@@ -33,7 +33,7 @@ class Restaurants extends Component {
             ) : (
               <div className="row">
                 {restaurants.map(rest => (
-                  <RestaurantCard key={rest._id} rest={rest} />
+                  <RestaurantCard key={rest.id} rest={rest} />
                 ))}
               </div>
             )}

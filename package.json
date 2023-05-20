@@ -5,16 +5,18 @@
     "body-parser": "^1.18.3",
     "composable-middleware": "^0.3.0",
     "concurrently": "^4.0.1",
+    "dotenv": "^16.0.3",
     "express": "^4.16.4",
     "express-jwt": "^5.3.1",
     "is-empty": "^1.2.0",
     "javascript-state-machine": "^3.1.0",
     "jsonwebtoken": "^8.3.0",
+    "knex": "^0.95.14",
     "lodash": "^4.17.15",
-    "mongoose": "^5.3.11",
     "nodemon": "^2.0.2",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
+    "pg": "^8.7.1",
     "validator": "^10.9.0"
   },
   "description": "Full Stack Food Delivery SPA",
@@ -28,12 +30,11 @@
   "name": "food-delivery",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ShahAnuj2610/tomato-food-delivery.git"
+    "url": "https://github.com/tisaih/tomato-food-delivery-PostgreSQL"
   },
   "scripts": {
     "client-install": "npm install --prefix client",
     "start": "node server.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
